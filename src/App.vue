@@ -1,7 +1,11 @@
 <script setup lang="ts"></script>
-
+const obj ={name:"Andy"}
 <template>
-  <div>Vue3-Admin-Template2</div>
+  <div class="test">Vue3-Admin-Template2</div>
 </template>
 
-<style scoped></style>
+<style scoped lang="scss">
+.test{
+    width:  200px;
+}
+</style>
