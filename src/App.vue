@@ -1,14 +1,8 @@
-<script setup lang="ts">
-import { Plus } from '@element-plus/icons-vue'
-</script>
-const obj ={name:"Andy"}
+<script setup lang="ts"></script>
 <template>
-  <div class="test">Vue3-Admin-Template2</div>
-  <el-button type="primary" plain :icon="Plus">primary</el-button>
+  <div>Test SVG</div>
+  <svg-icon name="exit-full" color="#1296db" width="48px" height="48px" />
+  <Pagination />
 </template>
 
-<style scoped lang="scss">
-.test {
-  width: 200px;
-}
-</style>
+<style scoped lang="scss"></style>
