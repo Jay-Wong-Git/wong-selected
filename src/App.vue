@@ -5,7 +5,7 @@ const obj ={name:"Andy"}
 </template>
 
 <style scoped lang="scss">
-.test{
-    width:  200px;
+.test {
+  width: 200px;
 }
 </style>
