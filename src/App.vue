@@ -1,8 +1,7 @@
-<script setup lang="ts"></script>
 <template>
-  <div>Test SVG</div>
-  <svg-icon name="exit-full" color="#1296db" width="48px" height="48px" />
-  <Pagination />
+  <div></div>
 </template>
 
-<style scoped lang="scss"></style>
+<script setup lang="ts"></script>
+
+<style lang="scss" scoped></style>
