@@ -3,27 +3,40 @@
     <el-row>
       <el-col :span="12" :xs="0"></el-col>
       <el-col :span="12" :xs="24">
-        <el-form class="login_form">
+        <el-form
+          class="login_form"
+          :model="loginFormData"
+          :rules="rules"
+          ref="loginFormRef"
+        >
           <h1>Hello</h1>
           <h2>Welcome to Wong Selected!</h2>
-          <el-form-item>
+          <el-form-item prop="username">
             <el-input
               :prefix-icon="User"
-              v-model="loginForm.username"
+              v-model="loginFormData.username"
               placeholder="account"
             ></el-input>
           </el-form-item>
-          <el-form-item>
+          <el-form-item prop="password">
             <el-input
               type="password"
               :prefix-icon="Lock"
-              v-model="loginForm.password"
+              v-model="loginFormData.password"
               show-password
               placeholder="password"
             ></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button class="login_btn" type="primary" plain>Login</el-button>
+            <el-button
+              class="login_btn"
+              type="primary"
+              plain
+              @click="login"
+              :loading="isLoading"
+            >
+              Login
+            </el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -33,13 +46,83 @@
 
 <script setup lang="ts">
 import { User, Lock } from '@element-plus/icons-vue'
-import { reactive } from 'vue'
-
+import { reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
+//引入用户相关的小仓库
+import useUserStore from '@/store/modules/user'
+import { ElNotification } from 'element-plus'
+//获取当前时间的工具方法：早上/上午/下午/晚上
+import { getTime } from '@/utils/time'
+const userStore = useUserStore()
+//获取路由器
+const $router = useRouter()
 //收集账号和密码
-const loginForm = reactive({
+const loginFormData = reactive({
   username: 'admin',
   password: '111111',
 })
+//获取登录表单对象
+const loginFormRef = ref()
+//自定义校验规则
+//校验用户名
+const validateUsername = (rule: any, value: any, callback: any) => {
+  let regx = /^[a-zA-Z0-9]+$/
+  if (regx.test(value)) {
+    callback()
+  } else {
+    callback(new Error('The username can only contain letters and numbers.'))
+  }
+}
+
+//定义表单校验配置对象
+const rules = {
+  username: [
+    { required: true, message: 'Please input username', trigger: 'change' },
+    { min: 2, max: 20, message: 'Length should be 2 to 20', trigger: 'change' },
+    { validator: validateUsername, trigger: 'change' },
+  ],
+  password: [
+    { required: true, message: 'Please input password', trigger: 'change' },
+    { min: 6, max: 20, message: 'Length should be 6 to 20', trigger: 'change' },
+  ],
+}
+//按钮是否处于加载状态
+let isLoading = ref(false)
+//登录按钮回调
+const login = async () => {
+  try {
+    //校验登录表单，校验通过后才会发送请求
+    await loginFormRef.value.validate()
+    try {
+      //切换按钮加载状态为true
+      isLoading.value = true
+
+      //通知仓库发送登录请求
+      await userStore.userLogin(loginFormData)
+      //登录成功弹出成功提示
+      ElNotification({
+        type: 'success',
+        title: 'Login success!',
+        message: `Good ${getTime()}, welcome back!`,
+      })
+      //切换按钮加载状态为false
+      isLoading.value = false
+      //展示首页数据
+      await $router.replace('/')
+    } catch (e) {
+      //登录失败弹出错误提示
+      ElNotification({
+        type: 'error',
+        title: 'Login failed!',
+        message: (e as Error).message,
+      })
+      //切换按钮加载状态为false
+      isLoading.value = false
+    }
+  } catch (e) {
+    return
+  }
+}
 </script>
 
 <style lang="scss" scoped>

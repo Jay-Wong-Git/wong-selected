@@ -5,7 +5,8 @@ export interface loginForm {
 }
 //登录接口返回数据的ts类型
 interface loginResDataType {
-  token: string
+  token?: string
+  message?: string
 }
 export interface loginResponseData {
   code: number
