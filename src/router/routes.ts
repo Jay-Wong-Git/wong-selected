@@ -8,9 +8,9 @@ export const constRoutes = [
   },
   {
     //登录成功
-    name: 'home',
+    name: 'layout',
     path: '/',
-    component: () => import('@/views/home/index.vue'),
+    component: () => import('@/layout/index.vue'),
   },
   {
     //访问路径错误
