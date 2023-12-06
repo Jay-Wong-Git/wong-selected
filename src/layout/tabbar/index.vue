@@ -3,11 +3,11 @@
   <div class="tabbar">
     <!--  顶部tab左侧 -->
     <div class="tabbar_left">
-      <Breadcrumb/>
+      <Breadcrumb />
     </div>
     <!--  顶部tab右侧 -->
     <div class="tabbar_right">
-      <Settings/>
+      <Settings />
     </div>
   </div>
 </template>

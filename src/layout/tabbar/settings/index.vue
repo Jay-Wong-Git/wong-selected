@@ -1,10 +1,6 @@
 <template>
   <el-button size="small" icon="Refresh" circle></el-button>
-  <el-button
-    size="small"
-    icon="FullScreen"
-    circle
-  ></el-button>
+  <el-button size="small" icon="FullScreen" circle></el-button>
   <el-button size="small" icon="Setting" circle></el-button>
   <img
     src="/logo-site.png"
@@ -12,12 +8,12 @@
     alt="avatar"
   />
   <el-dropdown>
-        <span class="el-dropdown-link">
-          admin
-          <el-icon class="el-icon--right">
-            <arrow-down />
-          </el-icon>
-        </span>
+    <span class="el-dropdown-link">
+      admin
+      <el-icon class="el-icon--right">
+        <arrow-down />
+      </el-icon>
+    </span>
     <template #dropdown>
       <el-dropdown-menu>
         <el-dropdown-item>Logout</el-dropdown-item>
