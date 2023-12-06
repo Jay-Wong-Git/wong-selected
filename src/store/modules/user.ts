@@ -7,11 +7,15 @@ import { loginForm, loginResponseData } from '@/api/user/type'
 import { UserState } from '@/store/modules/types/type'
 //操作本地存储的工具方法
 import { GET_TOKEN, SET_TOKEN } from '@/utils/token'
+//引入常量路由
+import { constRoutes } from '@/router/routes'
+
 export default defineStore('User', {
   //存放数据
   state(): UserState {
     return {
       token: GET_TOKEN() || '', //用户的唯一标识
+      constRoutes, //存储常量路由到仓库
     }
   },
   //处理异步/逻辑
