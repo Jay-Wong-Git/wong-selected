@@ -1,4 +1,5 @@
-//登录接口需要携带的参数的ts类型
+//region mock相关
+/*//登录接口需要携带的参数的ts类型
 export interface loginForm {
   username: string
   password: string
@@ -31,4 +32,5 @@ interface userInfoResDataType {
 export interface userInfoResponseData {
   code: number
   data: userInfoResDataType
-}
+}*/
+//endregion

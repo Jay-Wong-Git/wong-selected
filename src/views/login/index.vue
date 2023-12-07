@@ -62,7 +62,7 @@ const $route = useRoute()
 //收集账号和密码
 const loginFormData = reactive({
   username: 'admin',
-  password: '111111',
+  password: 'atguigu123',
 })
 //获取登录表单对象
 const loginFormRef = ref()

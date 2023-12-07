@@ -41,6 +41,7 @@ import useUserStore from '@/store/modules/user'
 import { useRouter } from 'vue-router'
 //引入路由对象
 import { useRoute } from 'vue-router'
+import { ElNotification } from 'element-plus'
 //获取layout相关仓库
 const layoutSettingStore = useLayoutSettingStore()
 //获取用户数据相关仓库
@@ -63,10 +64,24 @@ const handleFullScreen = () => {
   }
 }
 //退出登录回调
-const handleLogout = () => {
-  //清空用户相关仓库数据
-  userStore.userLogout()
-  $router.push({ path: '/login', query: { redirect: $route.path } })
+const handleLogout = async () => {
+  try {
+    //清空用户相关仓库数据
+    await userStore.userLogout()
+    await $router.push({ path: '/login', query: { redirect: $route.path } })
+    //退出登录成功弹出提示
+    ElNotification({
+      type: 'success',
+      title: 'Logout success!',
+    })
+  } catch (e) {
+    //退出登录失败弹出错误提示
+    ElNotification({
+      type: 'error',
+      title: 'Logout failed!',
+      message: (e as Error).message,
+    })
+  }
 }
 </script>
 <script lang="ts">

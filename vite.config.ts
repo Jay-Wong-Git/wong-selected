@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 import { viteMockServe } from 'vite-plugin-mock'
 import vue from '@vitejs/plugin-vue'
 import path from 'path'
@@ -6,7 +6,10 @@ import path from 'path'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 
 // https://vitejs.dev/config/
-export default defineConfig(({ command }) => {
+export default defineConfig(({ command, mode }) => {
+  //获取环境变量对象
+  const env = loadEnv(mode, process.cwd()) //process.cwd()用于获取项目根目录，即index.html所在目录
+
   return {
     plugins: [
       vue(),
@@ -29,6 +32,19 @@ export default defineConfig(({ command }) => {
         scss: {
           javascriptEnabled: true,
           additionalData: '@import "./src/styles/variable.scss";',
+        },
+      },
+    },
+    //配置代理跨域
+    server: {
+      proxy: {
+        [env.VITE_APP_BASE_API]: {
+          //获取数据的服务器地址
+          target: env.VITE_SERVE,
+          //是否改变发出 HTTP 请求时的源（origin）信息
+          changeOrigin: true,
+          //路径重写
+          rewrite: (path) => path.replace(/^\/api/, ''),
         },
       },
     },
