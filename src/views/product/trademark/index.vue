@@ -47,7 +47,7 @@
 </template>
 
 <script setup lang="ts">
-import {onMounted, onUpdated, reactive, ref} from 'vue'
+import { onMounted, onUpdated, reactive, ref } from 'vue'
 import { reqTrademark } from '@/api/product/trademark'
 import { Records, TrademarkResponseData } from '@/api/product/trademark/type'
 //当前页码
@@ -76,7 +76,7 @@ onMounted(() => {
   handleGetTrademark()
 })
 
-onUpdated(()=>{
+onUpdated(() => {
   console.log(trademarkList)
 })
 //更改每页显示条数回调
