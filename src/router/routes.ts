@@ -97,18 +97,8 @@ export const constRoutes = [
       icon: 'Goods',
     },
     component: () => import('@/layout/index.vue'),
-    redirect: '/product/attr',
+    redirect: '/product/trademark',
     children: [
-      {
-        name: 'attr',
-        path: '/product/attr',
-        meta: {
-          title: 'Attr Management',
-          hidden: false,
-          icon: 'Connection',
-        },
-        component: () => import('@/views/product/attr/index.vue'),
-      },
       {
         name: 'trademark',
         path: '/product/trademark',
@@ -118,6 +108,16 @@ export const constRoutes = [
           icon: 'Ticket',
         },
         component: () => import('@/views/product/trademark/index.vue'),
+      },
+      {
+        name: 'attr',
+        path: '/product/attr',
+        meta: {
+          title: 'Attr Management',
+          hidden: false,
+          icon: 'Connection',
+        },
+        component: () => import('@/views/product/attr/index.vue'),
       },
       {
         name: 'spu',

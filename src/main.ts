@@ -7,7 +7,7 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 //配置element-plus国际化
 //@ts-expect-error
-import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
+import en from 'element-plus/dist/locale/en.mjs'
 //svg插件需要配置代码
 import 'virtual:svg-icons-register'
 //引入自定义插件对象:注册整个项目全局组件
@@ -24,7 +24,7 @@ const app = createApp(App)
 app.use(globalComponent)
 //安装element-plus插件
 app.use(ElementPlus, {
-  locale: zhCn, //element-plus国际化配置
+  locale: en, //element-plus国际化配置
 })
 //注册模版路由
 app.use(router)

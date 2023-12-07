@@ -9,9 +9,9 @@ import { GET_TOKEN, REMOVE_TOKEN, SET_TOKEN } from '@/utils/token'
 import { constRoutes } from '@/router/routes'
 import { ElMessage } from 'element-plus'
 import {
-  loginFormData,
-  loginResponseData,
-  userInfoResponseData,
+  LoginFormData,
+  LoginResponseData,
+  UserInfoResponseData,
 } from '@/api/user/type'
 
 export default defineStore('UserStore', {
@@ -27,9 +27,9 @@ export default defineStore('UserStore', {
   //处理异步/逻辑
   actions: {
     //用户登录的方法
-    async userLogin(data: loginFormData) {
+    async userLogin(data: LoginFormData) {
       //发送登录请求
-      const res: loginResponseData = await reqLogin(data)
+      const res: LoginResponseData = await reqLogin(data)
       //登录成功，存储token
       if (res.code === 200) {
         //更新仓库
@@ -45,7 +45,7 @@ export default defineStore('UserStore', {
     },
     //获取用户信息的方法
     async userInfo() {
-      const res: userInfoResponseData = await reqUserInfo()
+      const res: UserInfoResponseData = await reqUserInfo()
       if (res.code === 200) {
         //更新仓库
         this.username = res.data.name
