@@ -18,7 +18,11 @@ import Breadcrumb from './breadcrumb/index.vue'
 //右侧设置组件Settings
 import Settings from './settings/index.vue'
 </script>
-
+<script lang="ts">
+export default {
+  name: 'Tabbar',
+}
+</script>
 <style lang="scss" scoped>
 .tabbar {
   width: 100%;

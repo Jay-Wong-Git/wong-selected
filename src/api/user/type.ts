@@ -26,6 +26,7 @@ interface userInfoDataType {
 }
 interface userInfoResDataType {
   checkUser: userInfoDataType
+  message?: string
 }
 export interface userInfoResponseData {
   code: number

@@ -51,9 +51,10 @@ export const constRoutes = [
     meta: {
       title: 'Access Control',
       hidden: false,
-      icon: 'Operation',
+      icon: 'Lock',
     },
     component: () => import('@/layout/index.vue'),
+    redirect: '/acl/user',
     children: [
       {
         name: 'user',
@@ -96,6 +97,7 @@ export const constRoutes = [
       icon: 'Goods',
     },
     component: () => import('@/layout/index.vue'),
+    redirect: '/product/attr',
     children: [
       {
         name: 'attr',

@@ -47,15 +47,18 @@
 <script setup lang="ts">
 import { User, Lock } from '@element-plus/icons-vue'
 import { reactive, ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 //引入用户相关的小仓库
 import useUserStore from '@/store/modules/user'
 import { ElNotification } from 'element-plus'
 //获取当前时间的工具方法：早上/上午/下午/晚上
 import { getTime } from '@/utils/time'
+//获取用户相关仓库
 const userStore = useUserStore()
 //获取路由器
 const $router = useRouter()
+//获取路由对象
+const $route = useRoute()
 //收集账号和密码
 const loginFormData = reactive({
   username: 'admin',
@@ -99,16 +102,17 @@ const login = async () => {
 
       //通知仓库发送登录请求
       await userStore.userLogin(loginFormData)
-      //登录成功弹出成功提示
+      //切换按钮加载状态为false
+      isLoading.value = false
+      //展示首页数据或重定向到query参数指定的路径
+      const redirect: any = $route.query.redirect
+      await $router.push({ path: redirect ? redirect : '/' })
+      // 弹出成功提示
       ElNotification({
         type: 'success',
         title: 'Login success!',
-        message: `Good ${getTime()}, welcome back!`,
+        message: `Good ${getTime()}, ${userStore.username}! Welcome back!`,
       })
-      //切换按钮加载状态为false
-      isLoading.value = false
-      //展示首页数据
-      await $router.replace('/')
     } catch (e) {
       //登录失败弹出错误提示
       ElNotification({

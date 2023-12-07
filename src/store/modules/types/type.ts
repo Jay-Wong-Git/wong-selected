@@ -5,4 +5,6 @@ import { constRoutes } from '@/router/routes'
 export interface UserState {
   token: string | null
   constRoutes: RouteRecordRaw[]
+  username: string
+  avatar: string
 }

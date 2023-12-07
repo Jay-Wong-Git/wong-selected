@@ -7,9 +7,10 @@
       <el-scrollbar class="scrollbar">
         <!--    菜单组件    -->
         <el-menu
-          background-color="#001529"
+          background-color="#483469"
           text-color="white"
           :default-active="$route.path"
+          :collapse="layoutSettingStore.isFolded"
         >
           <!--     根据路由动态生成组件     -->
           <Menu :menuList="userStore.constRoutes" />
@@ -17,11 +18,11 @@
       </el-scrollbar>
     </div>
     <!--  顶部导航  -->
-    <div class="layout_top">
+    <div class="layout_top" :class="{ fold: layoutSettingStore.isFolded }">
       <Tabbar />
     </div>
     <!--  内容展示  -->
-    <div class="layout_main">
+    <div class="layout_main" :class="{ fold: layoutSettingStore.isFolded }">
       <Main></Main>
     </div>
   </div>
@@ -40,9 +41,17 @@ import Main from './main/index.vue'
 import Tabbar from './tabbar/index.vue'
 //引入用户相关的小仓库
 import useUserStore from '@/store/modules/user'
+//引入layout设置相关小仓库
+import useLayoutSettingStore from '@/store/modules/setting'
 const userStore = useUserStore()
+const layoutSettingStore = useLayoutSettingStore()
 
 const $route = useRoute()
+</script>
+<script lang="ts">
+export default {
+  name: 'Layout',
+}
 </script>
 
 <style lang="scss" scoped>
@@ -54,6 +63,8 @@ const $route = useRoute()
     width: $base-menu-width;
     height: 100vh;
     background: $base-menu-background;
+    transition: all 0.3s;
+    overflow: hidden;
     .scrollbar {
       height: calc(100vh - $base-menu-logo-height);
       width: 100%;
@@ -61,6 +72,9 @@ const $route = useRoute()
         border-right: none;
       }
     }
+    //&.fold {
+    //  width: $base-menu-min-width;
+    //}
   }
   .layout_top {
     position: absolute;
@@ -68,6 +82,11 @@ const $route = useRoute()
     left: $base-menu-width;
     width: calc(100% - $base-menu-width);
     height: $base-tabbar-height;
+    transition: all 0.3s;
+    &.fold {
+      width: calc(100% - $base-menu-min-width);
+      left: $base-menu-min-width;
+    }
   }
   .layout_main {
     position: absolute;
@@ -78,6 +97,11 @@ const $route = useRoute()
     background: hotpink;
     padding: 20px;
     overflow: auto;
+    transition: all 0.3s;
+    &.fold {
+      width: calc(100% - $base-menu-min-width);
+      left: $base-menu-min-width;
+    }
   }
 }
 </style>
