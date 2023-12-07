@@ -8,6 +8,11 @@ import { GET_TOKEN, REMOVE_TOKEN, SET_TOKEN } from '@/utils/token'
 //引入常量路由
 import { constRoutes } from '@/router/routes'
 import { ElMessage } from 'element-plus'
+import {
+  loginFormData,
+  loginResponseData,
+  userInfoResponseData,
+} from '@/api/user/type'
 
 export default defineStore('UserStore', {
   //存放数据
@@ -22,9 +27,9 @@ export default defineStore('UserStore', {
   //处理异步/逻辑
   actions: {
     //用户登录的方法
-    async userLogin(data: any) {
+    async userLogin(data: loginFormData) {
       //发送登录请求
-      const res: any = await reqLogin(data)
+      const res: loginResponseData = await reqLogin(data)
       //登录成功，存储token
       if (res.code === 200) {
         //更新仓库
@@ -40,7 +45,7 @@ export default defineStore('UserStore', {
     },
     //获取用户信息的方法
     async userInfo() {
-      const res = await reqUserInfo()
+      const res: userInfoResponseData = await reqUserInfo()
       if (res.code === 200) {
         //更新仓库
         this.username = res.data.name
@@ -55,7 +60,7 @@ export default defineStore('UserStore', {
     //用户退出登录的方法
     async userLogout() {
       //向服务器发送退出登录请求
-      const res = await reqLogout()
+      const res: any = await reqLogout()
       console.log(res)
       if (res.code === 200) {
         //清空仓库中的数据
