@@ -44,10 +44,9 @@
               @confirm="handleDeleteTrademark(row.id)"
             >
               <template #reference>
-                <el-button type="primary" size="small" icon="Delete"/>
+                <el-button type="primary" size="small" icon="Delete" />
               </template>
             </el-popconfirm>
-
           </template>
         </el-table-column>
       </el-table>
@@ -96,7 +95,7 @@
               alt="logo"
             />
             <el-icon v-else class="logo-uploader-icon">
-              <Plus/>
+              <Plus />
             </el-icon>
           </el-upload>
         </el-form-item>
@@ -115,7 +114,7 @@
 </template>
 
 <script setup lang="ts">
-import {nextTick, onMounted, onUpdated, reactive, ref} from 'vue'
+import { nextTick, onMounted, onUpdated, reactive, ref } from 'vue'
 import {
   reqAddOrUpdateTrademark,
   reqDeleteTrademark,
@@ -126,9 +125,9 @@ import {
   Trademark,
   TrademarkResponseData,
 } from '@/api/product/trademark/type'
-import {ElMessage, ElNotification} from 'element-plus'
-import type {UploadProps} from 'element-plus'
-import {InfoFilled} from "@element-plus/icons-vue";
+import { ElMessage, ElNotification } from 'element-plus'
+import type { UploadProps } from 'element-plus'
+import { InfoFilled } from '@element-plus/icons-vue'
 //当前页码
 let pageNum = ref<number>(1)
 //每页显示条数
@@ -158,10 +157,10 @@ let trademarkFormRef = ref()
 //定义表单校验规则
 const rules = {
   tmName: [
-    {required: true, message: 'Please input trademark', trigger: 'change'},
-    {min: 2, max: 20, message: 'Length should be 2 to 20', trigger: 'change'},
+    { required: true, message: 'Please input trademark', trigger: 'change' },
+    { min: 2, max: 20, message: 'Length should be 2 to 20', trigger: 'change' },
   ],
-  logoUrl: [{required: true}, {validator: validateLogoUrl}],
+  logoUrl: [{ required: true }, { validator: validateLogoUrl }],
 }
 //获取品牌数据回调
 const handleGetTrademark = async (page = 1) => {
@@ -216,7 +215,11 @@ const handleDeleteTrademark = async (id: number) => {
   try {
     const res = await reqDeleteTrademark(id)
     if (res.code === 200) {
-      await handleGetTrademark((trademarkList.value.length > 1 || pageNum.value === 1) ? pageNum.value : pageNum.value - 1)
+      await handleGetTrademark(
+        trademarkList.value.length > 1 || pageNum.value === 1
+          ? pageNum.value
+          : pageNum.value - 1,
+      )
       ElMessage.success('Delete Success!')
     }
   } catch (e) {
