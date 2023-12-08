@@ -93,38 +93,34 @@ const rules = {
 let isLoading = ref(false)
 //登录按钮回调
 const login = async () => {
+  //校验登录表单，校验通过后才会发送请求
+  await loginFormRef.value.validate()
   try {
-    //校验登录表单，校验通过后才会发送请求
-    await loginFormRef.value.validate()
-    try {
-      //切换按钮加载状态为true
-      isLoading.value = true
+    //切换按钮加载状态为true
+    isLoading.value = true
 
-      //通知仓库发送登录请求
-      await userStore.userLogin(loginFormData)
-      //切换按钮加载状态为false
-      isLoading.value = false
-      //展示首页数据或重定向到query参数指定的路径
-      const redirect: any = $route.query.redirect
-      await $router.push({ path: redirect ? redirect : '/' })
-      // 弹出成功提示
-      ElNotification({
-        type: 'success',
-        title: 'Login success!',
-        message: `Good ${getTime()}, ${userStore.username}! Welcome back!`,
-      })
-    } catch (e) {
-      //登录失败弹出错误提示
-      ElNotification({
-        type: 'error',
-        title: 'Login failed!',
-        message: (e as Error).message,
-      })
-      //切换按钮加载状态为false
-      isLoading.value = false
-    }
+    //通知仓库发送登录请求
+    await userStore.userLogin(loginFormData)
+    //切换按钮加载状态为false
+    isLoading.value = false
+    //展示首页数据或重定向到query参数指定的路径
+    const redirect: any = $route.query.redirect
+    await $router.push({ path: redirect ? redirect : '/' })
+    // 弹出成功提示
+    ElNotification({
+      type: 'success',
+      title: 'Login success!',
+      message: `Good ${getTime()}, ${userStore.username}! Welcome back!`,
+    })
   } catch (e) {
-    return
+    //登录失败弹出错误提示
+    ElNotification({
+      type: 'error',
+      title: 'Login failed!',
+      message: (e as Error).message,
+    })
+    //切换按钮加载状态为false
+    isLoading.value = false
   }
 }
 </script>

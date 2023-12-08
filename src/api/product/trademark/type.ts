@@ -6,7 +6,7 @@ interface ResponseData {
   ok: boolean
 }
 //某个品牌详细信息的ts类型
-interface Trademark {
+export interface Trademark {
   id?: number
   tmName: string
   logoUrl: string
