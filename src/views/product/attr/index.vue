@@ -48,12 +48,12 @@
             </template>
           </el-table-column>
           <el-table-column label="Operation" width="150px">
-            <template #="{ row }">
+            <template v-slot="{ row }">
               <el-button
                 type="primary"
                 size="small"
                 icon="Edit"
-                @click="handleUpdateAttr"
+                @click="handleUpdateAttr(row)"
               />
               <el-popconfirm
                 :title="`Are you sure to delete?`"
@@ -232,9 +232,11 @@ const handleAddAttr = () => {
   scene.value = 1
 }
 //点击修改属性按钮回调
-const handleUpdateAttr = () => {
+const handleUpdateAttr = (row: Attribute) => {
   //切换当前场景为添加或修改属性
   scene.value = 1
+  //数据回显
+  Object.assign(attrParams, JSON.parse(JSON.stringify(row)))
 }
 //点击取消编辑属性按钮回调
 const handleCancelAddOrUpdateAttr = () => {
