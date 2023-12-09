@@ -110,6 +110,7 @@ const login = async () => {
     ElNotification({
       type: 'success',
       title: 'Login success!',
+      duration: 1000,
       message: `Good ${getTime()}, ${userStore.username}! Welcome back!`,
     })
   } catch (e) {
@@ -117,6 +118,7 @@ const login = async () => {
     ElNotification({
       type: 'error',
       title: 'Login failed!',
+      duration: 1000,
       message: (e as Error).message,
     })
     //切换按钮加载状态为false

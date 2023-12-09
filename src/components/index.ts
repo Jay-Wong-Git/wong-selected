@@ -1,10 +1,11 @@
 //引入项目中全部的全局组件
 import SvgIcon from '@/components/SvgIcon/index.vue'
 import Pagination from '@/components/Pagination/index.vue'
+import Category from '@/components/Category/index.vue'
 //引入element-plus提供全部图标组件
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 //全局对象
-const allGlobalComponents: any = { SvgIcon, Pagination }
+const allGlobalComponents: any = { SvgIcon, Pagination, Category }
 //对外暴露插件对象
 export default {
   install(app: any) {

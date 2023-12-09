@@ -73,12 +73,14 @@ const handleLogout = async () => {
     ElNotification({
       type: 'success',
       title: 'Logout success!',
+      duration: 1000,
     })
   } catch (e) {
     //退出登录失败弹出错误提示
     ElNotification({
       type: 'error',
       title: 'Logout failed!',
+      duration: 1000,
       message: (e as Error).message,
     })
   }

@@ -1,12 +1,17 @@
 <template>
   <div>
-    <el-card class="box-card">
+    <el-card>
       <!--  添加品牌按钮  -->
-      <el-button icon="Plus" @click="handleAddTrademark">
+      <el-button
+        icon="Plus"
+        type="primary"
+        style="width: 130px"
+        @click="handleAddTrademark"
+      >
         Add Trademark
       </el-button>
       <!--  用于展示的表格组件  -->
-      <el-table style="margin: 10px 0" border :data="trademarkList">
+      <el-table style="margin: 15px 0" border :data="trademarkList">
         <el-table-column
           label="No."
           width="80px"
@@ -44,7 +49,7 @@
               @confirm="handleDeleteTrademark(row.id)"
             >
               <template #reference>
-                <el-button type="primary" size="small" icon="Delete" />
+                <el-button type="danger" size="small" icon="Delete" />
               </template>
             </el-popconfirm>
           </template>
@@ -175,7 +180,10 @@ const handleGetTrademark = async (page = 1) => {
       trademarkList.value = res.data.records
     }
   } catch (e) {
-    ElMessage.error('Load trademark data error!')
+    ElMessage.error({
+      duration: 2000,
+      message: 'Load trademark data error!',
+    })
   }
 }
 //组件挂载完毕后默认请求第1页共3条品牌数据
@@ -220,10 +228,21 @@ const handleDeleteTrademark = async (id: number) => {
           ? pageNum.value
           : pageNum.value - 1,
       )
-      ElMessage.success('Delete Success!')
+      ElMessage.success({
+        duration: 2000,
+        message: 'Delete Success!',
+      })
+    } else {
+      ElMessage.error({
+        duration: 2000,
+        message: res.data,
+      })
     }
   } catch (e) {
-    ElMessage.error('Delete Failed!')
+    ElMessage.error({
+      duration: 2000,
+      message: 'Delete Failed!',
+    })
   }
 }
 //点击取消添加/修改品牌回调
@@ -241,22 +260,39 @@ const handleConfirmTrademark = async () => {
     //添加/修改品牌成功
     if (res.code === 200) {
       //弹出成功提示
-      ElMessage.success(trademarkParams.id ? 'Update Success!' : 'Add Success!')
+      ElMessage.success({
+        duration: 2000,
+        message: trademarkParams.id ? 'Update Success!' : 'Add Success!',
+      })
       //重新请求获取品牌接口
       await handleGetTrademark(trademarkParams.id ? pageNum.value : 1)
+    } else {
+      ElMessage.error({
+        duration: 2000,
+        message: res.data,
+      })
     }
   } catch (e) {
     //弹出失败提示
-    ElMessage.error(trademarkParams.id ? 'Update Failed!' : 'Add Failed!')
+    ElMessage.error({
+      duration: 2000,
+      message: trademarkParams.id ? 'Update Failed!' : 'Add Failed!',
+    })
   }
 }
 //图片上传前回调
 const handleBeforeUpload: UploadProps['beforeUpload'] = (rawFile) => {
   if (rawFile.type !== 'image/jpeg' && rawFile.type !== 'image/png') {
-    ElMessage.error('Logo image must be JPG/PNG format!')
+    ElMessage.error({
+      duration: 2000,
+      message: 'Logo image must be JPG/PNG format!',
+    })
     return false
   } else if (rawFile.size / 1024 > 300) {
-    ElMessage.error('Logo image size can not exceed 300kb!')
+    ElMessage.error({
+      duration: 2000,
+      message: 'Logo image size can not exceed 300kb!',
+    })
     return false
   }
   return true

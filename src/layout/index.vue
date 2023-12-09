@@ -94,6 +94,7 @@ export default {
     left: $base-menu-width;
     height: calc(100vh - $base-tabbar-height);
     width: calc(100% - $base-menu-width);
+    background: white;
     padding: 20px;
     overflow: auto;
     transition: all 0.3s;
