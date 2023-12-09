@@ -15,7 +15,9 @@ enum API {
   //获取指定分类下属性及属性值的接口地址
   ATTR_URL = '/admin/product/attrInfoList/',
   //添加属性或修改已有属性值的接口地址
-  ADD_OR_UPDATE_ADDR_URL = '/admin/product/saveAttrInfo',
+  ADD_OR_UPDATE_ATTR_URL = '/admin/product/saveAttrInfo',
+  //删除属性的接口地址
+  DELETE_ATTR_URL = '/admin/product/deleteAttr',
 }
 //获取属性一级分类的接口
 export const reqLevel1 = () =>
@@ -33,4 +35,7 @@ export const reqAttr = (level1Id: number, level2Id: number, level3Id: number) =>
   )
 //添加属性或修改已有属性值的接口
 export const reqAddOrUpdateAttr = (data: Attribute) =>
-  request.post<any, any>(API.ADD_OR_UPDATE_ADDR_URL, data)
+  request.post<any, any>(API.ADD_OR_UPDATE_ATTR_URL, data)
+//删除属性接口
+export const reqDeleteAttr = (attrId: number) =>
+  request.delete<any, any>(`${API.DELETE_ATTR_URL}/${attrId}`)

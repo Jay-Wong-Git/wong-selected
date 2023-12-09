@@ -56,10 +56,11 @@
                 @click="handleUpdateAttr(row)"
               />
               <el-popconfirm
-                :title="`Are you sure to delete?`"
+                :title="`Are you sure to delete [${row.attrName}]?`"
                 width="250px"
                 icon="Delete"
                 icon-color="#409EFFFF"
+                @confirm="handleDeleteAttr(row.id)"
               >
                 <template #reference>
                   <el-button type="danger" size="small" icon="Delete" />
@@ -126,7 +127,7 @@
           <el-table-column width="150px" label="Operation">
             <template v-slot="{ row, $index }">
               <el-popconfirm
-                :title="`Are you sure to delete ${row.valueName}?`"
+                :title="`Are you sure to delete [${row.valueName}]?`"
                 width="250px"
                 icon="Delete"
                 icon-color="#409EFFFF"
@@ -160,10 +161,10 @@
 </template>
 
 <script setup lang="ts">
-import { nextTick, onMounted, reactive, ref, watch } from 'vue'
+import {nextTick, onBeforeUnmount, onMounted, reactive, ref, watch} from 'vue'
 //引入分类信息相关仓库
 import useCategoryStore from '@/store/modules/category'
-import { reqAddOrUpdateAttr, reqAttr } from '@/api/product/attr'
+import { reqAddOrUpdateAttr, reqAttr, reqDeleteAttr } from '@/api/product/attr'
 import {
   AttributeResponseData,
   Attribute,
@@ -194,6 +195,10 @@ onMounted(() => {
   if (categoryStore.level3Id) {
     getAttr()
   }
+})
+//组件销毁前，清空掉仓库中分类相关的数据
+onBeforeUnmount(()=>{
+  categoryStore.$reset()
 })
 //监听仓库三级分类id变化
 watch(
@@ -238,6 +243,29 @@ const handleUpdateAttr = (row: Attribute) => {
   //数据回显
   Object.assign(attrParams, JSON.parse(JSON.stringify(row)))
 }
+//点击删除属性按钮回调
+const handleDeleteAttr = async (attrId: number) => {
+  try {
+    const res = await reqDeleteAttr(attrId)
+    if (res.code === 200) {
+      //重新获取所有属性
+      await getAttr()
+      //提示属性删除成功
+      ElMessage.success({
+        duration: 2000,
+        message: 'Delete Success!',
+      })
+    } else {
+      throw new Error('Delete Failed!')
+    }
+  } catch (e) {
+    ElMessage.error({
+      duration: 2000,
+      message: (e as Error).message,
+    })
+  }
+}
+
 //点击取消编辑属性按钮回调
 const handleCancelAddOrUpdateAttr = () => {
   //切换当前场景为显示已有属性

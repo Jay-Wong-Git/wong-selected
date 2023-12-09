@@ -42,7 +42,7 @@
               @click="handleUpdateTrademark(row)"
             />
             <el-popconfirm
-              :title="`Are you sure to delete ${row.tmName}?`"
+              :title="`Are you sure to delete [${row.tmName}]?`"
               width="250px"
               icon="Delete"
               icon-color="#409EFFFF"
