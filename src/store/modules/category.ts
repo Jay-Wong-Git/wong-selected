@@ -2,7 +2,7 @@
 import { defineStore } from 'pinia'
 import { reqLevel1, reqLevel2, reqLevel3 } from '@/api/product/attr'
 import { ElMessage } from 'element-plus'
-import { CategoryDetail, CategoryResponseData } from '@/api/product/attr/type'
+import { CategoryResponseData } from '@/api/product/attr/type'
 import { CategoryState } from '@/store/modules/types/type'
 
 export default defineStore('CategoryStore', {

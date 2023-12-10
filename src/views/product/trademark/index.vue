@@ -40,6 +40,7 @@
               size="small"
               icon="Edit"
               @click="handleUpdateTrademark(row)"
+              title="Edit Trademark"
             />
             <el-popconfirm
               :title="`Are you sure to delete [${row.tmName}]?`"
@@ -49,7 +50,12 @@
               @confirm="handleDeleteTrademark(row.id)"
             >
               <template #reference>
-                <el-button type="danger" size="small" icon="Delete" />
+                <el-button
+                  type="danger"
+                  size="small"
+                  icon="Delete"
+                  title="Delete Trademark"
+                />
               </template>
             </el-popconfirm>
           </template>
@@ -64,7 +70,7 @@
         layout="prev, pager, next, jumper, ->, sizes, total"
         :total="total"
         @size-change="handleSizeChange"
-        @current-change="handleGetTrademark"
+        @current-change="getTrademark"
       />
     </el-card>
     <!-- 添加品牌或修改品牌时弹出的对话框 -->
@@ -168,7 +174,7 @@ const rules = {
   logoUrl: [{ required: true }, { validator: validateLogoUrl }],
 }
 //获取品牌数据回调
-const handleGetTrademark = async (page = 1) => {
+const getTrademark = async (page = 1) => {
   pageNum.value = page
   try {
     const res: TrademarkResponseData = await reqTrademark(
@@ -188,12 +194,12 @@ const handleGetTrademark = async (page = 1) => {
 }
 //组件挂载完毕后默认请求第1页共3条品牌数据
 onMounted(() => {
-  handleGetTrademark()
+  getTrademark()
 })
 
 //更改每页显示条数回调
 const handleSizeChange = () => {
-  handleGetTrademark()
+  getTrademark()
 }
 //添加品牌按钮回调
 const handleAddTrademark = () => {
@@ -223,7 +229,7 @@ const handleDeleteTrademark = async (id: number) => {
   try {
     const res = await reqDeleteTrademark(id)
     if (res.code === 200) {
-      await handleGetTrademark(
+      await getTrademark(
         trademarkList.value.length > 1 || pageNum.value === 1
           ? pageNum.value
           : pageNum.value - 1,
@@ -265,7 +271,7 @@ const handleConfirmTrademark = async () => {
         message: trademarkParams.id ? 'Update Success!' : 'Add Success!',
       })
       //重新请求获取品牌接口
-      await handleGetTrademark(trademarkParams.id ? pageNum.value : 1)
+      await getTrademark(trademarkParams.id ? pageNum.value : 1)
     } else {
       ElMessage.error({
         duration: 2000,

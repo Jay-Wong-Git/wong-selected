@@ -25,7 +25,7 @@
           />
           <el-table-column label="Attr Name" width="150px" prop="attrName" />
           <el-table-column label="Attr Value">
-            <template #="{ row }">
+            <template v-slot="{ row }">
               <el-tag
                 effect="plain"
                 v-for="(item, index) in row.attrValueList"
@@ -54,6 +54,7 @@
                 size="small"
                 icon="Edit"
                 @click="handleUpdateAttr(row)"
+                title="Edit Attr"
               />
               <el-popconfirm
                 :title="`Are you sure to delete [${row.attrName}]?`"
@@ -63,7 +64,12 @@
                 @confirm="handleDeleteAttr(row.id)"
               >
                 <template #reference>
-                  <el-button type="danger" size="small" icon="Delete" />
+                  <el-button
+                    type="danger"
+                    size="small"
+                    icon="Delete"
+                    title="Delete Attr"
+                  />
                 </template>
               </el-popconfirm>
             </template>
@@ -134,7 +140,12 @@
                 @confirm="handleDeleteAttrValue($index)"
               >
                 <template #reference>
-                  <el-button type="danger" size="small" icon="Delete" />
+                  <el-button
+                    type="danger"
+                    size="small"
+                    icon="Delete"
+                    title="Delete Attr Value"
+                  />
                 </template>
               </el-popconfirm>
             </template>
@@ -161,7 +172,7 @@
 </template>
 
 <script setup lang="ts">
-import {nextTick, onBeforeUnmount, onMounted, reactive, ref, watch} from 'vue'
+import { nextTick, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
 //引入分类信息相关仓库
 import useCategoryStore from '@/store/modules/category'
 import { reqAddOrUpdateAttr, reqAttr, reqDeleteAttr } from '@/api/product/attr'
@@ -172,7 +183,6 @@ import {
 } from '@/api/product/attr/type'
 import category from '@/store/modules/category'
 import { ElMessage } from 'element-plus'
-
 //使用分类仓库
 const categoryStore = useCategoryStore()
 //存储已有属性及属性值
@@ -197,7 +207,7 @@ onMounted(() => {
   }
 })
 //组件销毁前，清空掉仓库中分类相关的数据
-onBeforeUnmount(()=>{
+onBeforeUnmount(() => {
   categoryStore.$reset()
 })
 //监听仓库三级分类id变化
