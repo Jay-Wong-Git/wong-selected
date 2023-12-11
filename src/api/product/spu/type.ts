@@ -101,3 +101,7 @@ export interface SkuData {
   spuId: number | undefined
   tmId: number | undefined
 }
+//定义获取指定SPU下所有SKU返回数据的ts类型
+export interface SpuAllSkuResponseData extends ResponseData {
+  data: SkuData[]
+}

@@ -163,7 +163,7 @@ import {
   Trademark,
 } from '@/api/product/spu/type'
 import {
-  reqAddOrUpdateSPU,
+  reqAddOrUpdateSpu,
   reqAllTrademark,
   reqBaseSaleAttr,
   reqSpuPicture,
@@ -360,7 +360,7 @@ const handleSaveSpuData = async () => {
   spuParams.value.spuSaleAttrList = spuSaleAttrArr.value
   //发送添加或更新请求
   try {
-    const res = await reqAddOrUpdateSPU(spuParams.value)
+    const res = await reqAddOrUpdateSpu(spuParams.value)
     if (res.code === 200) {
       //发送成功提示
       ElMessage.success({

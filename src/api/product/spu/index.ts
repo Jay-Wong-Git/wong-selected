@@ -4,6 +4,7 @@ import {
   AllTrademarkResponseData,
   BaseSaleAttrResponseData,
   SkuData,
+  SpuAllSkuResponseData,
   SpuData,
   SpuPictureResponseData,
   SpuResponseData,
@@ -29,10 +30,12 @@ enum API {
   DELETE_SPU_URL = '/admin/product/deleteSpu/{spuId}',
   //添加SKU接口地址
   ADD_SKU_URL = '/admin/product/saveSkuInfo',
+  //获取指定SPU下所有SKU接口地址
+  SPU_ALL_SKU_URL = '/admin/product/findBySpuId',
 }
 
 //获取已有的SPU数据接口
-export const reqSPU = (pageNum: number, pageSize: number, level3Id: number) =>
+export const reqSpu = (pageNum: number, pageSize: number, level3Id: number) =>
   request.get<any, SpuResponseData>(
     `${API.SPU_URL}/${pageNum}/${pageSize}?category3Id=${level3Id}`,
   )
@@ -49,7 +52,7 @@ export const reqSpuSaleAttr = (spuId: number) =>
 export const reqBaseSaleAttr = () =>
   request.get<any, BaseSaleAttrResponseData>(API.BASE_SALE_ATTR_URL)
 //添加或更新SPU接口
-export const reqAddOrUpdateSPU = (data: SpuData) => {
+export const reqAddOrUpdateSpu = (data: SpuData) => {
   if (!data.id) {
     return request.post<any, any>(API.ADD_SPU_URL, data)
   } else {
@@ -57,5 +60,8 @@ export const reqAddOrUpdateSPU = (data: SpuData) => {
   }
 }
 //添加SKU接口
-export const reqAddSKU = (data: SkuData) =>
+export const reqAddSku = (data: SkuData) =>
   request.post<any, any>(API.ADD_SKU_URL, data)
+//获取指定SPU下所有SKU接口
+export const reqSpuAllSku = (spuId: number) =>
+  request.get<any, SpuAllSkuResponseData>(`${API.SPU_ALL_SKU_URL}/${spuId}`)

@@ -108,7 +108,7 @@ import {
   SpuSaleAttrResponseData,
 } from '@/api/product/spu/type'
 import { reqAttr } from '@/api/product/attr'
-import { reqAddSKU, reqSpuPicture, reqSpuSaleAttr } from '@/api/product/spu'
+import { reqAddSku, reqSpuPicture, reqSpuSaleAttr } from '@/api/product/spu'
 import { reactive, ref } from 'vue'
 import { Attribute } from '@/api/product/attr/type'
 import { ElMessage } from 'element-plus'
@@ -222,7 +222,7 @@ const handleConfirmAddSKU = async () => {
   )
   //发送添加SKU请求
   try {
-    const res = await reqAddSKU(skuParams)
+    const res = await reqAddSku(skuParams)
     if (res.code === 200) {
       //添加成功提示信息
       ElMessage.success({

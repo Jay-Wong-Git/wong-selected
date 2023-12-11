@@ -47,6 +47,7 @@
                 type="success"
                 icon="View"
                 title="View SKU List"
+                @click="handleViewSkuList(row.id)"
               />
               <el-button
                 size="small"
@@ -81,6 +82,27 @@
         v-show="scene === 2"
         @changeScene="changeScene"
       />
+      <!--   dialog展示所有SKU   -->
+      <el-dialog
+        v-model="dialogTableVisible"
+        title="SKU List"
+        @close="dialogTableVisible = false"
+      >
+        <el-table :data="skuArr" border>
+          <el-table-column label="SKU Name" width="150" prop="skuName" />
+          <el-table-column label="SKU Price" width="200" prop="price" />
+          <el-table-column label="SKU Weight" prop="weight" />
+          <el-table-column label="SKU Picture">
+            <template v-slot="{ row }">
+              <img
+                :src="row.skuDefaultImg"
+                :alt="row.skuName"
+                style="width: 100px; height: 100px"
+              />
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-dialog>
     </el-card>
   </div>
 </template>
@@ -89,10 +111,11 @@
 import { onBeforeUnmount, ref, watch } from 'vue'
 //引入分类相关仓库
 import useCategoryStore from '@/store/modules/category'
-import { reqSPU } from '@/api/product/spu'
-import { SpuData, SpuResponseData } from '@/api/product/spu/type'
+import { reqSpu, reqSpuAllSku } from '@/api/product/spu'
+import { SkuData, SpuData, SpuResponseData } from '@/api/product/spu/type'
 import SpuForm from '@/views/product/spu/spuForm.vue'
 import SkuForm from '@/views/product/spu/skuForm.vue'
+import { ElMessage } from 'element-plus'
 //定义卡片内容切换变量：0表示展示已有SPU，1表示添加或修改SPU，2表示添加SKU
 let scene = ref<number>(0)
 //当前页码
@@ -109,6 +132,10 @@ const spuFormRef = ref<any>()
 const skuFormRef = ref<any>()
 //使用分类仓库数据
 const categoryStore = useCategoryStore()
+//展示或隐藏SKU列表dialog
+const dialogTableVisible = ref<boolean>(false)
+//用于保存指定SPU下所有SKU
+const skuArr = ref<SkuData[]>([])
 //监听三级分类id变化，发送请求SPU数据
 watch(
   () => categoryStore.level3Id,
@@ -126,7 +153,7 @@ onBeforeUnmount(() => {
 const getSPU = async (page: number = 1) => {
   pageNum.value = page
   try {
-    const res: SpuResponseData = await reqSPU(
+    const res: SpuResponseData = await reqSpu(
       pageNum.value,
       pageSize.value,
       categoryStore.level3Id as number,
@@ -161,6 +188,22 @@ const handleAddSKU = (spu: SpuData) => {
     categoryStore.level2Id as number,
     spu,
   )
+}
+//点击查看SKU列表回调
+const handleViewSkuList = async (spuId: number) => {
+  try {
+    const res = await reqSpuAllSku(spuId)
+    if (res.code === 200) {
+      skuArr.value = res.data
+      //显示对话框
+      dialogTableVisible.value = true
+    }
+  } catch (e) {
+    ElMessage.error({
+      duration: 2000,
+      message: (e as Error).message,
+    })
+  }
 }
 //每页显示数据切换回调
 const handleSizeChange = (size: number) => {
