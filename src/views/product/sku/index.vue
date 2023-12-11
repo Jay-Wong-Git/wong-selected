@@ -35,7 +35,12 @@
             @click="handleSkuOnSaleAndCancelSale(row)"
           />
           <el-button type="warning" size="small" icon="Edit" />
-          <el-button type="success" size="small" icon="View" />
+          <el-button
+            type="success"
+            size="small"
+            icon="View"
+            @click="handleViewSKU(row.id)"
+          />
           <el-popconfirm
             width="250px"
             icon="Delete"
@@ -61,16 +66,107 @@
       @current-change="getSKU"
       @size-change="handleSizeChange"
     />
+    <!--  抽屉组件用于显示SKU详情  -->
+    <el-drawer
+      v-model="drawer"
+      direction="rtl"
+      title="View SKU Detail"
+      size="50%"
+      @close="handleDrawerClose"
+    >
+      <template #default>
+        <el-row style="margin: 15px 0">
+          <el-col :span="8">SKU Name</el-col>
+          <el-col :span="16">{{ skuView.skuName }}</el-col>
+        </el-row>
+        <el-row style="margin: 15px 0">
+          <el-col :span="8">SKU Desc</el-col>
+          <el-col :span="16">{{ skuView.skuDesc }}</el-col>
+        </el-row>
+        <el-row style="margin: 15px 0">
+          <el-col :span="8">SKU Price</el-col>
+          <el-col :span="16">{{ '¥ ' + skuView.price }}</el-col>
+        </el-row>
+        <el-row style="margin: 15px 0">
+          <el-col :span="8">Platform Attr</el-col>
+          <el-col :span="16">
+            <el-tag
+              style="margin: 0 5px 5px 0"
+              v-for="(item, index) in skuView.skuAttrValueList"
+              :key="item.id"
+              size="small"
+              effect="plain"
+              :type="
+                index % 5 === 0
+                  ? 'success'
+                  : index % 5 === 1
+                    ? ''
+                    : index % 5 === 2
+                      ? 'warning'
+                      : index % 5 === 3
+                        ? 'danger'
+                        : 'info'
+              "
+            >
+              {{ item.valueName }}
+            </el-tag>
+          </el-col>
+        </el-row>
+        <el-row style="margin: 15px 0">
+          <el-col :span="8">Sale Attr</el-col>
+          <el-col :span="16">
+            <el-tag
+              style="margin: 0 5px 5px 0"
+              :key="item.id"
+              v-for="(item, index) in skuView.skuSaleAttrValueList"
+              size="small"
+              effect="plain"
+              :type="
+                index % 5 === 0
+                  ? 'success'
+                  : index % 5 === 1
+                    ? ''
+                    : index % 5 === 2
+                      ? 'warning'
+                      : index % 5 === 3
+                        ? 'danger'
+                        : 'info'
+              "
+            >
+              {{ item.saleAttrValueName }}
+            </el-tag>
+          </el-col>
+        </el-row>
+        <el-row style="margin: 15px 0">
+          <el-col :span="8">Pictures</el-col>
+          <el-col :span="16">
+            <el-carousel :interval="4000" type="card" height="200px">
+              <el-carousel-item
+                v-for="item in skuView.skuImageList"
+                :key="item.id"
+              >
+                <img
+                  :src="item.imgUrl"
+                  :alt="item.imgName"
+                  style="width: 100%; height: 100%"
+                />
+              </el-carousel-item>
+            </el-carousel>
+          </el-col>
+        </el-row>
+      </template>
+    </el-drawer>
   </el-card>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import {
   reqDeleteSku,
-  reqSku,
+  reqAllSku,
   reqSkuCancelSale,
   reqSkuOnSale,
+  reqSku,
 } from '@/api/product/sku'
 import { ElMessage } from 'element-plus'
 import { SkuData } from '@/api/product/sku/type'
@@ -80,8 +176,25 @@ const pageNum = ref<number>(1)
 const pageSize = ref<number>(10)
 //一共多少页
 const total = ref<number>(0)
-//保存SKU数据
+//保存SKU列表数据
 const skuArr = ref<SkuData[]>([])
+//保存指定展示SKU数据
+const skuView = reactive<SkuData>({
+  skuName: '',
+  skuDesc: '',
+  weight: undefined,
+  price: undefined,
+  isSale: 0,
+  skuAttrValueList: [],
+  skuDefaultImg: '',
+  skuImageList: [],
+  skuSaleAttrValueList: [],
+  category3Id: undefined,
+  spuId: undefined,
+  tmId: undefined,
+})
+//控制抽屉的显示与隐藏
+const drawer = ref<boolean>(false)
 //组件一挂载就立即加载默认数据
 onMounted(() => {
   getSKU()
@@ -90,7 +203,7 @@ onMounted(() => {
 const getSKU = async (page: number = 1) => {
   pageNum.value = page
   try {
-    const res = await reqSku(pageNum.value, pageSize.value)
+    const res = await reqAllSku(pageNum.value, pageSize.value)
     if (res.code === 200) {
       skuArr.value = res.data.records
       total.value = res.data.total
@@ -173,6 +286,58 @@ const handleSkuOnSaleAndCancelSale = async (sku: SkuData) => {
     })
   }
 }
+//点击查看SKU详情回调
+const handleViewSKU = async (skuId: number) => {
+  //清空旧数据
+  Object.assign(skuView, {
+    skuName: '',
+    skuDesc: '',
+    weight: undefined,
+    price: undefined,
+    isSale: 0,
+    skuAttrValueList: [],
+    skuDefaultImg: '',
+    skuImageList: [],
+    skuSaleAttrValueList: [],
+    category3Id: undefined,
+    spuId: undefined,
+    tmId: undefined,
+  })
+  try {
+    //发送请求获取指定SKU数据
+    const res = await reqSku(skuId)
+    if (res.code === 200) {
+      Object.assign(skuView, res.data)
+      //打开抽屉
+      drawer.value = true
+    } else {
+      throw new Error('Loading Failed!')
+    }
+  } catch (e) {
+    ElMessage.error({
+      duration: 2000,
+      message: (e as Error).message,
+    })
+  }
+}
+//关闭抽屉回调
+const handleDrawerClose = () => {}
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.el-carousel__item h3 {
+  color: #475669;
+  opacity: 0.75;
+  line-height: 200px;
+  margin: 0;
+  text-align: center;
+}
+
+.el-carousel__item:nth-child(2n) {
+  background-color: #99a9bf;
+}
+
+.el-carousel__item:nth-child(2n + 1) {
+  background-color: #d3dce6;
+}
+</style>

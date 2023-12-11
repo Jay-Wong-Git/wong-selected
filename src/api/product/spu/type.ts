@@ -96,6 +96,7 @@ export interface SkuData {
   price: number | undefined
   skuAttrValueList: { attrId: number; valueId: number }[]
   skuDefaultImg: string
+  skuImageList?: string[]
   skuSaleAttrValueList: { saleAttrId: number; saleAttrValueId: number }[]
   category3Id: number | undefined
   spuId: number | undefined
