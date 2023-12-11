@@ -49,12 +49,22 @@
                 title="View SKU List"
                 @click="handleViewSkuList(row.id)"
               />
-              <el-button
-                size="small"
-                type="danger"
+              <el-popconfirm
+                width="250px"
                 icon="Delete"
-                title="Delete SPU"
-              />
+                icon-color="#409EFFFF"
+                :title="`Are your sure to delete '${row.spuName}'`"
+                @confirm="handleDeleteSPU(row.id)"
+              >
+                <template #reference>
+                  <el-button
+                    size="small"
+                    type="danger"
+                    icon="Delete"
+                    title="Delete SPU"
+                  />
+                </template>
+              </el-popconfirm>
             </template>
           </el-table-column>
         </el-table>
@@ -111,7 +121,7 @@
 import { onBeforeUnmount, ref, watch } from 'vue'
 //引入分类相关仓库
 import useCategoryStore from '@/store/modules/category'
-import { reqSpu, reqSpuAllSku } from '@/api/product/spu'
+import { reqDeleteSpu, reqSpu, reqSpuAllSku } from '@/api/product/spu'
 import { SkuData, SpuData, SpuResponseData } from '@/api/product/spu/type'
 import SpuForm from '@/views/product/spu/spuForm.vue'
 import SkuForm from '@/views/product/spu/skuForm.vue'
@@ -197,6 +207,26 @@ const handleViewSkuList = async (spuId: number) => {
       skuArr.value = res.data
       //显示对话框
       dialogTableVisible.value = true
+    }
+  } catch (e) {
+    ElMessage.error({
+      duration: 2000,
+      message: (e as Error).message,
+    })
+  }
+}
+//点击删除SPU按钮回调
+const handleDeleteSPU = async (spuId: number) => {
+  try {
+    const res = await reqDeleteSpu(spuId)
+    if (res.code === 200) {
+      if (spuArr.value.length === 1 && pageNum.value !== 1) {
+        await getSPU(pageNum.value - 1)
+      } else {
+        await getSPU(pageNum.value)
+      }
+    } else {
+      throw new Error('Delete SPU Failed!')
     }
   } catch (e) {
     ElMessage.error({

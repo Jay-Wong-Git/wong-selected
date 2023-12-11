@@ -27,7 +27,7 @@ enum API {
   //修改SPU接口地址
   UPDATE_SPU_URL = '/admin/product/updateSpuInfo',
   //删除SPU接口地址
-  DELETE_SPU_URL = '/admin/product/deleteSpu/{spuId}',
+  DELETE_SPU_URL = '/admin/product/deleteSpu',
   //添加SKU接口地址
   ADD_SKU_URL = '/admin/product/saveSkuInfo',
   //获取指定SPU下所有SKU接口地址
@@ -65,3 +65,6 @@ export const reqAddSku = (data: SkuData) =>
 //获取指定SPU下所有SKU接口
 export const reqSpuAllSku = (spuId: number) =>
   request.get<any, SpuAllSkuResponseData>(`${API.SPU_ALL_SKU_URL}/${spuId}`)
+//删除指定SPU接口
+export const reqDeleteSpu = (spuId: number) =>
+  request.delete<any, any>(`${API.DELETE_SPU_URL}/${spuId}`)
