@@ -1,5 +1,7 @@
 //spu相关ts类型
 //定义返回数据的基本ts类型
+import { Attribute } from '@/api/product/attr/type'
+
 interface ResponseData {
   code: number
   message: string
@@ -68,6 +70,7 @@ export interface SaleAttr {
   spuId?: number
   flag?: boolean //true表示编辑，false表示展示
   saleAttrValue?: string // 用来临时记录新增属性值
+  saleAttrIdAndValueId?: string //临时记录属性id及所选属性值id
 }
 
 //定义获取指定SPU销售属性返回对象的ts类型
@@ -83,4 +86,18 @@ export interface BaseSaleAttr {
 //定义获取基础销售属性接口返回值ts类型
 export interface BaseSaleAttrResponseData extends ResponseData {
   data: BaseSaleAttr[]
+}
+//定义SKU的ts类型
+export interface SkuData {
+  id?: number
+  skuName: string
+  skuDesc: string
+  weight: number | undefined
+  price: number | undefined
+  skuAttrValueList: { attrId: number; valueId: number }[]
+  skuDefaultImg: string
+  skuSaleAttrValueList: { saleAttrId: number; saleAttrValueId: number }[]
+  category3Id: number | undefined
+  spuId: number | undefined
+  tmId: number | undefined
 }

@@ -37,6 +37,7 @@ export interface Attribute {
   categoryId: number | undefined
   attrName: string
   attrValueList: AttributeValueList
+  attrIdAndValueId?: string //临时记录属性id及所选属性值id
 }
 
 //定义获取属性及属性值接口返回数据ts类型

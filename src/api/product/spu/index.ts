@@ -3,6 +3,7 @@ import request from '@/utils/request'
 import {
   AllTrademarkResponseData,
   BaseSaleAttrResponseData,
+  SkuData,
   SpuData,
   SpuPictureResponseData,
   SpuResponseData,
@@ -26,6 +27,8 @@ enum API {
   UPDATE_SPU_URL = '/admin/product/updateSpuInfo',
   //删除SPU接口地址
   DELETE_SPU_URL = '/admin/product/deleteSpu/{spuId}',
+  //添加SKU接口地址
+  ADD_SKU_URL = '/admin/product/saveSkuInfo',
 }
 
 //获取已有的SPU数据接口
@@ -53,3 +56,6 @@ export const reqAddOrUpdateSPU = (data: SpuData) => {
     return request.post<any, any>(API.UPDATE_SPU_URL, data)
   }
 }
+//添加SKU接口
+export const reqAddSKU = (data: SkuData) =>
+  request.post<any, any>(API.ADD_SKU_URL, data)

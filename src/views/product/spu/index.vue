@@ -33,7 +33,7 @@
                 type="primary"
                 icon="Plus"
                 title="Add SKU"
-                @click="handleAddSKU"
+                @click="handleAddSKU(row)"
               />
               <el-button
                 size="small"
@@ -76,7 +76,11 @@
         @changeScene="changeScene"
       />
       <!--   添加SKU表单   -->
-      <SkuForm v-show="scene === 2" @changeScene="changeScene" />
+      <SkuForm
+        ref="skuFormRef"
+        v-show="scene === 2"
+        @changeScene="changeScene"
+      />
     </el-card>
   </div>
 </template>
@@ -99,8 +103,10 @@ let pageSize = ref<number>(3)
 let total = ref<number>(0)
 //存储已有的SPU数据
 let spuArr = ref<SpuData[]>([])
-//获取子组件实例
+//获取Spu子组件实例
 const spuFormRef = ref<any>()
+//获取Sku子组件实例
+const skuFormRef = ref<any>()
 //使用分类仓库数据
 const categoryStore = useCategoryStore()
 //监听三级分类id变化，发送请求SPU数据
@@ -146,9 +152,15 @@ const handleUpdateSPU = (row: SpuData) => {
   spuFormRef.value.initUpdateSpuFormData(row)
 }
 //点击添加SKU按钮回调
-const handleAddSKU = () => {
+const handleAddSKU = (spu: SpuData) => {
   //切换至添加SKU表单页面
   scene.value = 2
+  //调用子组件初始化方法
+  skuFormRef.value.initAddSkuFormData(
+    categoryStore.level1Id as number,
+    categoryStore.level2Id as number,
+    spu,
+  )
 }
 //每页显示数据切换回调
 const handleSizeChange = (size: number) => {
