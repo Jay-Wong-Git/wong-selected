@@ -26,3 +26,15 @@ export interface UserDataListResponseData extends ResponseData {
     pages: number
   }
 }
+//定义角色ts类型
+export interface Role {
+  id: number
+  roleName: string
+}
+//定义获取所有角色及用户所拥有角色接口返回数据类型
+export interface UserRoleAndAllRoleResponseData extends ResponseData {
+  data: {
+    assignRoles: Role[]
+    allRolesList: Role[]
+  }
+}
