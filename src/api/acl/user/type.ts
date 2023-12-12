@@ -7,14 +7,14 @@ interface ResponseData {
 }
 //定义用户数据ts类型
 export interface UserData {
-  id?: number
+  id?: number | undefined
   createTime?: string
   updateTime?: string
   username: string
   password: string
   name: string
-  phone: string
-  roleName: string
+  phone?: string
+  roleName?: string
 }
 //定义分页获取用户数据返回值ts类型
 export interface UserDataListResponseData extends ResponseData {
