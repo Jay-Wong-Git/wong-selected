@@ -1,4 +1,4 @@
-//用户相关的请求接口
+//用户登录相关的请求接口
 import request from '@/utils/request'
 import {
   LoginFormData,
@@ -17,7 +17,6 @@ export const reqLogin = (data: LoginFormData) =>
 //获取用户信息接口
 export const reqUserInfo = () =>
   request.get<any, UserInfoResponseData>(API.USERINFO_URL)
-
 //退出登录接口
 export const reqLogout = () => request.post<any, any>(API.LOGOUT_URL)
 //region mock相关
