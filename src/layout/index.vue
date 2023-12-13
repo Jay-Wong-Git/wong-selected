@@ -73,7 +73,7 @@ export default {
       }
     }
     //&.fold {
-    //  width: $base-menu-min-width;
+    //  width: $base-permission-min-width;
     //}
   }
   .layout_top {
