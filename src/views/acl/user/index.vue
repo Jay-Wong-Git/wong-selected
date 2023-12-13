@@ -28,11 +28,17 @@
       </el-form>
     </el-card>
     <el-card style="margin-top: 15px">
-      <el-button type="primary" style="width: 105px" @click="handleAddUser">
+      <el-button
+        type="primary"
+        icon="Plus"
+        style="width: 105px"
+        @click="handleAddUser"
+      >
         Add User
       </el-button>
       <el-button
         :disabled="!userDeleteBatchIds.length > 0"
+        icon="Delete"
         type="danger"
         style="width: 105px"
         @click="handleDeleteUserBatch"
@@ -45,21 +51,15 @@
         border
         style="margin: 15px 0"
       >
-        <el-table-column type="selection" align="center" />
-        <el-table-column type="index" label="No." align="center" />
+        <el-table-column type="selection" align="center" width="50px" />
+        <el-table-column type="index" label="#" align="center" width="50px" />
         <el-table-column label="Id" width="80px" prop="id" />
         <el-table-column
           label="Username"
-          width="120px"
           show-overflow-tooltip
           prop="username"
         />
-        <el-table-column
-          label="Nickname"
-          width="120px"
-          show-overflow-tooltip
-          prop="name"
-        />
+        <el-table-column label="Nickname" show-overflow-tooltip prop="name" />
         <el-table-column label="Role" show-overflow-tooltip prop="roleName" />
         <el-table-column
           label="Created Time"

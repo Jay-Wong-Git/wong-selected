@@ -227,7 +227,7 @@ const handleDeleteSKU = async (skuId: number) => {
   try {
     const res = await reqDeleteSku(skuId)
     if (res.code === 200) {
-      if (pageSize.value === 1 && pageNum.value !== 1) {
+      if (skuArr.value.length === 1 && pageNum.value !== 1) {
         await getSKU(pageNum.value - 1)
       } else {
         await getSKU(pageNum.value)
