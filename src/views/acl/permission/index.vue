@@ -39,6 +39,7 @@
             {{ 'Edit' }}
           </el-button>
           <el-popconfirm
+            v-if="row.level !== 1"
             icon="Delete"
             icon-color="#409EFFFF"
             width="250px"
@@ -47,7 +48,6 @@
           >
             <template #reference>
               <el-button
-                v-if="row.level !== 1"
                 type="danger"
                 size="small"
                 title="Delete Permission"

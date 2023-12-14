@@ -1,7 +1,7 @@
 <template>
   <div class="logo_container">
     <img :src="settings.logo" alt="logo" v-if="!settings.logoHidden" />
-    <p>{{ settings.title }}</p>
+    <div v-show="!layoutSettingStore.isFolded">{{ settings.title }}</div>
   </div>
 </template>
 
@@ -24,13 +24,14 @@ export default {
   height: $base-menu-logo-height;
   width: 100%;
   align-items: end;
-  justify-content: space-around;
+  justify-content: left;
+  margin-left: 4px;
   img {
     height: 40px;
   }
-  p {
-    color: white;
+  div {
     font-size: 20px;
+    margin-left: 18px;
   }
 }
 </style>

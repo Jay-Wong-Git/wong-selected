@@ -33,13 +33,15 @@
             size="small"
             :icon="row.isSale === 0 ? 'Top' : 'Bottom'"
             @click="handleSkuOnSaleAndCancelSale(row)"
+            :title="row.isSale === 0 ? 'Click to List' : 'Click to Delist'"
           />
-          <el-button type="warning" size="small" icon="Edit" />
+          <el-button disabled type="warning" size="small" icon="Edit" />
           <el-button
             type="success"
             size="small"
             icon="View"
             @click="handleViewSKU(row.id)"
+            title="View SKU"
           />
           <el-popconfirm
             width="250px"
@@ -49,7 +51,12 @@
             @confirm="handleDeleteSKU(row)"
           >
             <template #reference>
-              <el-button type="danger" size="small" icon="Delete" />
+              <el-button
+                type="danger"
+                size="small"
+                icon="Delete"
+                title="Delete SKU"
+              />
             </template>
           </el-popconfirm>
         </template>

@@ -12,6 +12,8 @@ import en from 'element-plus/dist/locale/en.mjs'
 import 'virtual:svg-icons-register'
 //引入自定义插件对象:注册整个项目全局组件
 import globalComponent from '@/components'
+//引入暗黑模式样式
+import 'element-plus/theme-chalk/dark/css-vars.css'
 //引入路由
 import router from '@/router'
 //引入pinia

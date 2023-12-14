@@ -30,7 +30,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-image: linear-gradient(to right, #f1e3e3, #9e839e, #ded0d5);
+  //background-image: linear-gradient(to right, #f1e3e3, #9e839e, #ded0d5);
   .tabbar_left {
     display: flex;
     margin-left: 10px;

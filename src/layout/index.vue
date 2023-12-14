@@ -7,8 +7,6 @@
       <el-scrollbar class="scrollbar">
         <!--    菜单组件    -->
         <el-menu
-          background-color="#483469"
-          text-color="white"
           :default-active="$route.path"
           :collapse="layoutSettingStore.isFolded"
         >
@@ -59,10 +57,9 @@ export default {
   width: 100%;
   height: 100vh;
   .layout_side {
-    color: white;
     width: $base-menu-width;
     height: 100vh;
-    background: $base-menu-background;
+    //background: $base-menu-background;
     transition: all 0.3s;
     overflow: hidden;
     .scrollbar {
@@ -94,7 +91,7 @@ export default {
     left: $base-menu-width;
     height: calc(100vh - $base-tabbar-height);
     width: calc(100% - $base-menu-width);
-    background: white;
+    //background: white;
     padding: 20px;
     overflow: auto;
     transition: all 0.3s;

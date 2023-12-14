@@ -1,6 +1,7 @@
 //路由鉴权
 import router from '@/router'
 //引入进度条插件及css文件
+// @ts-ignore
 import nprogress from 'nprogress'
 import 'nprogress/nprogress.css'
 //引入大仓库pinia
