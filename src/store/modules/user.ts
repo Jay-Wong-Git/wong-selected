@@ -3,23 +3,40 @@ import { defineStore } from 'pinia'
 //引入请求接口
 import { reqLogin, reqUserInfo, reqLogout } from '@/api/user'
 import { UserState } from '@/store/modules/types/type'
+//深拷贝工具
+// @ts-ignore
+import cloneDeep from 'lodash/cloneDeep'
 //操作本地存储的工具方法
 import { GET_TOKEN, REMOVE_TOKEN, SET_TOKEN } from '@/utils/token'
 //引入常量路由
-import { constRoutes } from '@/router/routes'
+import { anyRoute, asyncRoutes, constRoutes } from '@/router/routes'
 import { ElMessage } from 'element-plus'
 import {
   LoginFormData,
   LoginResponseData,
   UserInfoResponseData,
 } from '@/api/user/type'
+import router from '@/router'
+import { RouteRecordRaw } from 'vue-router'
+
+//过滤用户的异步路由
+const filterAsyncRoutes = (asyncRoutes: any[], routes: string[]) => {
+  return asyncRoutes.filter((item: any) => {
+    if (routes.includes(item.name)) {
+      if (item.children && item.children.length > 0) {
+        item.children = filterAsyncRoutes(item.children, routes)
+      }
+      return true
+    }
+  })
+}
 
 export default defineStore('UserStore', {
   //存放数据
   state(): UserState {
     return {
       token: GET_TOKEN() || '', //用户的唯一标识
-      constRoutes, //存储常量路由到仓库
+      userRoutes: constRoutes, //用户路由，默认为常量路由
       username: '', //用户名
       avatar: '', //头像地址
     }
@@ -50,6 +67,18 @@ export default defineStore('UserStore', {
         //更新仓库
         this.username = res.data.name
         this.avatar = res.data.avatar
+
+        //获取用户异步路由
+        const userAsyncRoutes = filterAsyncRoutes(
+          cloneDeep(asyncRoutes),
+          res.data.routes,
+        )
+        //更新用户路由
+        this.userRoutes = [...constRoutes, anyRoute, ...userAsyncRoutes]
+        //注册路由
+        ;[anyRoute, ...userAsyncRoutes].forEach((route) =>
+          router.addRoute(route),
+        )
         //保证当前async函数返回一个成功的Promise
         return 'ok'
       } else {

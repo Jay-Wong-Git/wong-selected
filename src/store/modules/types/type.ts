@@ -4,7 +4,7 @@ import type { CategoryDetail } from '@/api/product/attr/type'
 
 export interface UserState {
   token: string | null
-  constRoutes: RouteRecordRaw[]
+  userRoutes: RouteRecordRaw[]
   username: string
   avatar: string
 }

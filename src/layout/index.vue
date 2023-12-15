@@ -11,7 +11,7 @@
           :collapse="layoutSettingStore.isFolded"
         >
           <!--     根据路由动态生成组件     -->
-          <Menu :menuList="userStore.constRoutes" />
+          <Menu :menuList="userStore.userRoutes" />
         </el-menu>
       </el-scrollbar>
     </div>

@@ -42,7 +42,8 @@ router.beforeEach(async (to: any, from: any, next: any) => {
         //没有用户信息，需要先发送请求获取用户信息，成功后再放行
         try {
           await userStore.userInfo()
-          next()
+          //防止注册异步路由白屏
+          next({ ...to })
         } catch (e) {
           //token过期或者用户手动修改了本地存储的token
           //退出登录

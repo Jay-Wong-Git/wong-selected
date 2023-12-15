@@ -1,4 +1,4 @@
-//对外暴露配置路由（常量路由）
+//常量路由
 export const constRoutes = [
   {
     //登录
@@ -46,7 +46,21 @@ export const constRoutes = [
     component: () => import('@/views/screen/index.vue'),
   },
   {
-    name: 'acl',
+    //访问路径错误
+    name: '404',
+    path: '/404',
+    meta: {
+      title: '404',
+      hidden: true,
+      icon: 'Close',
+    },
+    component: () => import('@/views/404/index.vue'),
+  },
+]
+//异步路由
+export const asyncRoutes = [
+  {
+    name: 'Acl',
     path: '/acl',
     meta: {
       title: 'Access Control',
@@ -57,7 +71,7 @@ export const constRoutes = [
     redirect: '/acl/user',
     children: [
       {
-        name: 'user',
+        name: 'User',
         path: '/acl/user',
         meta: {
           title: 'User Management',
@@ -67,7 +81,7 @@ export const constRoutes = [
         component: () => import('@/views/acl/user/index.vue'),
       },
       {
-        name: 'role',
+        name: 'Role',
         path: '/acl/role',
         meta: {
           title: 'Role Management',
@@ -77,7 +91,7 @@ export const constRoutes = [
         component: () => import('@/views/acl/role/index.vue'),
       },
       {
-        name: 'permission',
+        name: 'Permission',
         path: '/acl/permission',
         meta: {
           title: 'Permission Management',
@@ -89,7 +103,7 @@ export const constRoutes = [
     ],
   },
   {
-    name: 'product',
+    name: 'Product',
     path: '/product',
     meta: {
       title: 'Product Management',
@@ -100,7 +114,7 @@ export const constRoutes = [
     redirect: '/product/trademark',
     children: [
       {
-        name: 'trademark',
+        name: 'Trademark',
         path: '/product/trademark',
         meta: {
           title: 'Trademark Management',
@@ -110,7 +124,7 @@ export const constRoutes = [
         component: () => import('@/views/product/trademark/index.vue'),
       },
       {
-        name: 'attr',
+        name: 'Attr',
         path: '/product/attr',
         meta: {
           title: 'Attr Management',
@@ -120,7 +134,7 @@ export const constRoutes = [
         component: () => import('@/views/product/attr/index.vue'),
       },
       {
-        name: 'spu',
+        name: 'Spu',
         path: '/product/spu',
         meta: {
           title: 'SPU Management',
@@ -130,7 +144,7 @@ export const constRoutes = [
         component: () => import('@/views/product/spu/index.vue'),
       },
       {
-        name: 'sku',
+        name: 'Sku',
         path: '/product/sku',
         meta: {
           title: 'SKU Management',
@@ -141,26 +155,16 @@ export const constRoutes = [
       },
     ],
   },
-  {
-    //访问路径错误
-    name: '404',
-    path: '/404',
-    meta: {
-      title: '404',
-      hidden: true,
-      icon: 'Close',
-    },
-    component: () => import('@/views/404/index.vue'),
-  },
-  {
-    //任意非法路由重定向至404
-    name: 'any',
-    path: '/:pathMatch(.*)*',
-    meta: {
-      title: 'Any',
-      hidden: true,
-      icon: 'Cherry',
-    },
-    redirect: '/404',
-  },
 ]
+//任意路由
+export const anyRoute = {
+  //任意非法路由重定向至404
+  name: 'any',
+  path: '/:pathMatch(.*)*',
+  meta: {
+    title: 'Any',
+    hidden: true,
+    icon: 'Cherry',
+  },
+  redirect: '/404',
+}
