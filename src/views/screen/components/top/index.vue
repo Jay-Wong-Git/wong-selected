@@ -7,7 +7,7 @@
       <div class="title">Visual Big Data Platform</div>
     </div>
     <div class="right">
-      <span class="rbtn">Report</span>
+      <span class="rbtn"><a target="_blank" href="http://wongblog.icu:84/resume/20240103/FullStackSoftwareDeveloper-JieWang-2024.pdf">Contact Me</a></span>
       <span class="time">Current Time: {{ time }}</span>
     </div>
   </div>
@@ -96,6 +96,10 @@ onBeforeUnmount(() => {
       text-align: center;
       line-height: 40px;
       color: #29fcff;
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
     }
 
     .time {

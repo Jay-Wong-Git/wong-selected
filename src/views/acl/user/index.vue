@@ -37,7 +37,7 @@
         Add User
       </el-button>
       <el-button
-        :disabled="!userDeleteBatchIds.length > 0"
+        :disabled="!(userDeleteBatchIds.length > 0)"
         icon="Delete"
         type="danger"
         style="width: 105px"

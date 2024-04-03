@@ -98,7 +98,7 @@
               placeholder="Input value"
               size="small"
               style="width: 80px; margin: 5px"
-              :ref="(vc) => (inputRef = vc)"
+              :ref="(vc:any) => (inputRef = vc)"
               @blur="toUpdateAttrValueList(row)"
             />
             <el-button

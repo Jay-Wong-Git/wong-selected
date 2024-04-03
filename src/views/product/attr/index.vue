@@ -155,7 +155,7 @@
           type="primary"
           style="width: 75px"
           @click="handleSaveAttr"
-          :disabled="!attrParams.attrValueList.length > 0"
+          :disabled="!(attrParams.attrValueList.length > 0)"
         >
           Save
         </el-button>

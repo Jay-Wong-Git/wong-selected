@@ -4,7 +4,7 @@ import { defineStore } from 'pinia'
 import { reqLogin, reqUserInfo, reqLogout } from '@/api/user'
 import { UserState } from '@/store/modules/types/type'
 //深拷贝工具
-// @ts-ignore
+// @ts-expect-error
 import cloneDeep from 'lodash/cloneDeep'
 //操作本地存储的工具方法
 import { GET_TOKEN, REMOVE_TOKEN, SET_TOKEN } from '@/utils/token'

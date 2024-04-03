@@ -51,7 +51,7 @@ import { useRouter } from 'vue-router'
 defineProps(['menuList'])
 const $router = useRouter()
 //点击跳转路由
-const goRoute = (vc) => {
+const goRoute = (vc:any) => {
   $router.push(vc.index)
 }
 </script>

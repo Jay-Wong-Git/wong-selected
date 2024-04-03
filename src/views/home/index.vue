@@ -2,12 +2,17 @@
   <div>
     <el-card>
       <div class="greet-wrapper">
-        <img :src="userStore.avatar" alt="avatar" />
+        <img :src="userStore.avatar" alt="avatar"/>
         <div class="greet-info">
           <h1 class="greet-words">
             {{ greetWords }}
           </h1>
-          <div class="platform-name">{{ settings.title }}</div>
+          <div class="platform-name">
+            <span>{{ settings.title }}</span>&nbsp;&nbsp;
+            <a target="_blank"
+               href="http://wongblog.icu:84/resume/20240103/FullStackSoftwareDeveloper-JieWang-2024.pdf">Welcome to
+              Contact Me!</a>
+          </div>
         </div>
       </div>
     </el-card>
@@ -20,9 +25,9 @@
 <script setup lang="ts">
 //引入用户数据相关的仓库
 import useUserStore from '@/store/modules/user'
-import { computed, onMounted } from 'vue'
-import { ElNotification } from 'element-plus'
-import { getTime } from '@/utils/time'
+import {computed, onMounted} from 'vue'
+import {ElNotification} from 'element-plus'
+import {getTime} from '@/utils/time'
 import settings from '@/settings'
 //使用用户数据相关的仓库
 const userStore = useUserStore()
@@ -48,20 +53,24 @@ onMounted(() => {
 <style lang="scss" scoped>
 .greet-wrapper {
   display: flex;
+
   img {
     width: 120px;
     height: 120px;
     border-radius: 50%;
   }
+
   .greet-info {
     display: flex;
     flex-direction: column;
     align-items: start;
     justify-content: space-evenly;
     margin-left: 30px;
+
     .greet-words {
       font-size: 40px;
     }
+
     .platform-name {
       font-style: italic;
       font-size: 20px;
@@ -69,6 +78,7 @@ onMounted(() => {
     }
   }
 }
+
 .svg-wrapper {
   display: flex;
   justify-content: center;

@@ -1,7 +1,7 @@
 //路由鉴权
 import router from '@/router'
 //引入进度条插件及css文件
-// @ts-ignore
+// @ts-expect-error
 import nprogress from 'nprogress'
 import 'nprogress/nprogress.css'
 //引入大仓库pinia
@@ -27,8 +27,8 @@ router.beforeEach(async (to: any, from: any, next: any) => {
   //实现切换路由时展示进度条
   nprogress.start()
   //获取token用来判断用户是否已经登录
-  let token = userStore.token
-  let username = userStore.username
+  const token = userStore.token
+  const username = userStore.username
   if (token) {
     //已登录且访问/login时，阻止其访问/login
     if (to.path === '/login') {
