@@ -7,7 +7,14 @@
       <div class="title">Visual Big Data Platform</div>
     </div>
     <div class="right">
-      <span class="rbtn"><a target="_blank" href="http://wongblog.icu:84/resume/20240103/FullStackSoftwareDeveloper-JieWang-2024.pdf">Contact Me</a></span>
+      <span class="rbtn">
+        <a
+          target="_blank"
+          href="https://ybnmqwbzhlnouojwyyus.supabase.co/storage/v1/object/public/resume/Resume-JieWang-2024.pdf?t=2024-05-19T09:27:33.114Z"
+        >
+          Contact Me
+        </a>
+      </span>
       <span class="time">Current Time: {{ time }}</span>
     </div>
   </div>

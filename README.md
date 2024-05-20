@@ -1,18 +1,50 @@
-# Vue 3 + TypeScript + Vite
+## Wong Selected Platform 🗒️:
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Wong Selected Platform is an online platform designed for comprehensive management of merchandise, role-based permissions, and data presentation. It serves to facilitate efficient administration of both product offerings and user access controls. It's made using top-notch tools like Vue, Vue Router, TypeScript, Pinia, Element Plus, Axios and Echarts.
 
-## Recommended IDE Setup
+![Home](/public/assets/screenshots/home.png)
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+## Screenshots 📸:
 
-## Type Support For `.vue` Imports in TS
+![Home](/public/assets/screenshots/home.png)
+![Screen](/public/assets/screenshots/screen.png)
+![User Management](/public/assets/screenshots/user-management.png)
+![Role Management](/public/assets/screenshots/role-management.png)
+![Permission Management](/public/assets/screenshots/permission-management.png)
+![Trademark Management](/public/assets/screenshots/trademark-management.png)
+![Attribute Management](/public/assets/screenshots/attribute-management.png)
+![SPU Management](/public/assets/screenshots/spu-management.png)
+![SKU Management](/public/assets/screenshots/sku-management.png)
+![Dark Mode](/public/assets/screenshots/dark-mode.png)
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+## Tech Stack 🛠️:
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+- `Vue` 3.2.47
+- `Vue Router` 4.1.6
+- `Pinia` 2.0.34
+- `TypeScript` 4.9.3
+- `Element Plus` 2.3.3
+- `Axios` 1.3.5
+- `Echarts` 5.4.2
 
-1. Disable the built-in TypeScript Extension
-   1. Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-   2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+## Setting up locally ⚙️
+
+### 1. Clone on your local machine
+
+```bash
+https://github.com/Jay-Wong-Git/wong-selected.git
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Run on your local server
+
+```bash
+npm run dev
+```
+
+If you have read all of this, please star the repo, it will help me a lot ❤️

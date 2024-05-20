@@ -2,16 +2,20 @@
   <div>
     <el-card>
       <div class="greet-wrapper">
-        <img :src="userStore.avatar" alt="avatar"/>
+        <img :src="userStore.avatar" alt="avatar" />
         <div class="greet-info">
           <h1 class="greet-words">
             {{ greetWords }}
           </h1>
           <div class="platform-name">
-            <span>{{ settings.title }}</span>&nbsp;&nbsp;
-            <a target="_blank"
-               href="http://wongblog.icu:84/resume/20240103/FullStackSoftwareDeveloper-JieWang-2024.pdf">Welcome to
-              Contact Me!</a>
+            <span>{{ settings.title }}</span>
+            &nbsp;&nbsp;
+            <a
+              target="_blank"
+              href="https://ybnmqwbzhlnouojwyyus.supabase.co/storage/v1/object/public/resume/Resume-JieWang-2024.pdf?t=2024-05-19T09:27:33.114Z"
+            >
+              Welcome to Contact Me!
+            </a>
           </div>
         </div>
       </div>
@@ -25,9 +29,9 @@
 <script setup lang="ts">
 //引入用户数据相关的仓库
 import useUserStore from '@/store/modules/user'
-import {computed, onMounted} from 'vue'
-import {ElNotification} from 'element-plus'
-import {getTime} from '@/utils/time'
+import { computed, onMounted } from 'vue'
+import { ElNotification } from 'element-plus'
+import { getTime } from '@/utils/time'
 import settings from '@/settings'
 //使用用户数据相关的仓库
 const userStore = useUserStore()
